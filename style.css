@@ -239,3 +239,60 @@ input[type="number"] { -moz-appearance: textfield; }
   font-size: 0.75rem !important;
   color: #5a5060 !important;
 }
+
+/* AI Reading */
+.reveal-btn {
+  display: block;
+  margin: 12px auto 4px;
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid var(--accent, #c9a96e);
+  color: var(--accent, #c9a96e);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, color 0.2s;
+}
+.reveal-btn:hover {
+  background: var(--accent, #c9a96e);
+  color: #1a1a2e;
+}
+.reading-container {
+  padding: 0 4px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-secondary, #ccc);
+  min-height: 0;
+}
+.reading-container p { margin: 0.5em 0; }
+.reading-container ul { margin: 0.4em 0 0.4em 1.2em; padding: 0; }
+.reading-container li { margin: 0.2em 0; }
+.reading-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent, #c9a96e);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 0.8s step-end infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.reading-error {
+  padding: 8px 0;
+  color: #e07070;
+  font-size: 0.85rem;
+}
+.retry-btn {
+  margin-top: 6px;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid #e07070;
+  color: #e07070;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}

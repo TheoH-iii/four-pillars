@@ -164,10 +164,14 @@ function renderCards(chart) {
     buildCardAISummary()
   ];
 
-  container.innerHTML = cards.map(c => `
-    <div class="bazi-card">
+  const cardTypes = ['overview','dayMaster','fiveElements','luckyElements','tenDeities','luckCycles','specialStars','lifeGuidance','partnerTraits','aiSummary'];
+
+  container.innerHTML = cards.map((c, i) => `
+    <div class="bazi-card" data-card-type="${cardTypes[i]}">
       <h2 class="card-title">${c.title}</h2>
       <div class="card-body">${c.body}</div>
+      <div class="reading-container"></div>
+      <button class="reveal-btn" onclick="fetchReading(this.closest('.bazi-card'), this.closest('.bazi-card').dataset.cardType)">Reveal Reading</button>
     </div>
   `).join('');
 }
@@ -518,14 +522,11 @@ function buildCardPartnerTraits(eightChar, analysis) {
   };
 }
 
-// 10. AI Summary Placeholder
+// 10. AI Summary
 function buildCardAISummary() {
   return {
     title: 'AI Summary',
-    body: `<div class="ai-placeholder">
-      <p>Personalized AI reading available in the next phase.</p>
-      <p class="ai-hint">Your chart data has been calculated and is ready for AI analysis.</p>
-    </div>`
+    body: ''
   };
 }
 
