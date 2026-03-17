@@ -65,8 +65,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Implement streaming Claude proxy in api/reading.js and bump vercel.json maxDuration
-- [ ] 03-02-PLAN.md — Add reveal buttons, streaming render, markdown display, and error/retry UI to all cards
+- [x] 03-01-PLAN.md — Implement streaming Claude proxy in api/reading.js and bump vercel.json maxDuration
+- [x] 03-02-PLAN.md — Add reveal buttons, streaming render, markdown display, and error/retry UI to all cards
 
 ---
 
@@ -90,7 +90,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
 | 2. Chart Input & Bazi Calculation | 4/4 | Complete   | 2026-03-17 |
-| 3. AI Integration | 1/2 | In Progress|  |
+| 3. AI Integration | 2/2 | Complete | 2026-03-17 |
 | 4. Bilingual UI & Production Verification | 0/? | Not started | - |
 
 ---
