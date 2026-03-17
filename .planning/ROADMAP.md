@@ -25,7 +25,11 @@
   1. A visitor can open the deployed Vercel URL and see a page load without errors
   2. The serverless function endpoint returns a valid response when called directly
   3. The codebase is pure HTML/CSS/JS with no front-end framework present
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Create all scaffold files (HTML, CSS, JS stubs, serverless function stub, vercel.json)
+- [ ] 01-02-PLAN.md — Deploy to Vercel and verify live endpoints
 
 ---
 
@@ -74,7 +78,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Scaffold & Deployment Pipeline | 0/? | Not started | - |
+| 1. Project Scaffold & Deployment Pipeline | 0/2 | Not started | - |
 | 2. Chart Input & Bazi Calculation | 0/? | Not started | - |
 | 3. AI Integration | 0/? | Not started | - |
 | 4. Bilingual UI & Production Verification | 0/? | Not started | - |
