@@ -179,6 +179,186 @@ function dataRows(rows) {
   ).join('');
 }
 
+// ── AI Reading ─────────────────────────────────────────
+
+// Minimal markdown renderer: bold, paragraphs, bullet lists
+function renderMarkdown(text) {
+  // Bold
+  let html = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Split into lines for list detection
+  const lines = html.split('\n');
+  const out = [];
+  let inList = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const isBullet = /^[-•]\s/.test(line);
+    if (isBullet) {
+      if (!inList) { out.push('<ul>'); inList = true; }
+      out.push('<li>' + line.replace(/^[-•]\s/, '') + '</li>');
+    } else {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(line);
+    }
+  }
+  if (inList) out.push('</ul>');
+  // Paragraphs: join and split on double newline
+  const joined = out.join('\n');
+  const paras = joined.split(/\n\n+/);
+  return '<p>' + paras.map(p => p.replace(/\n/g, ' ')).join('</p><p>') + '</p>';
+}
+
+// Build compact chart summary for API request
+function buildChartSummary(chart, cardType) {
+  const { eightChar, yun, analysis } = chart;
+  const stems   = [eightChar.getYearGan(), eightChar.getMonthGan(), eightChar.getDayGan(), eightChar.getTimeGan()];
+  const branches = [eightChar.getYearZhi(), eightChar.getMonthZhi(), eightChar.getDayZhi(), eightChar.getTimeZhi()];
+  const pillars = stems.map((s, i) => s + branches[i]).join(' · ');
+  const dayMaster = eightChar.getDayGan();
+  const dayMasterElement = ELEMENT_NAMES[STEM_ELEMENT[dayMaster]] || STEM_ELEMENT[dayMaster];
+  const favorableElements = (analysis.favorable || []).map(el => ELEMENT_NAMES[el] || el);
+
+  let cardData = {};
+  if (cardType === 'overview') {
+    const dist = getDeityDistribution(analysis.tenDeities);
+    const top3 = Object.entries(dist).sort((a, b) => b[1] - a[1]).slice(0, 3)
+      .map(([deity, count]) => ({ deity: DEITY_NAMES.en[deity] || deity, count }));
+    cardData = { stars: analysis.stars, tenDeities: top3 };
+  } else if (cardType === 'fiveElements') {
+    const counts = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+    stems.forEach(s => { if (STEM_ELEMENT[s]) counts[STEM_ELEMENT[s]]++; });
+    branches.forEach(b => {
+      const hidden = BRANCH_HIDDEN_STEMS[b] || [];
+      hidden.forEach(hs => { if (STEM_ELEMENT[hs]) counts[STEM_ELEMENT[hs]] += 0.5; });
+    });
+    cardData = { distribution: counts };
+  } else if (cardType === 'tenDeities') {
+    const dist = getDeityDistribution(analysis.tenDeities);
+    const top3 = Object.entries(dist).sort((a, b) => b[1] - a[1]).slice(0, 3)
+      .map(([deity, count]) => ({ deity: DEITY_NAMES.en[deity] || deity, count }));
+    cardData = { top3 };
+  } else if (cardType === 'luckCycles') {
+    try {
+      const startAge = yun.getStartYear ? yun.getStartYear() : null;
+      const daYuns = yun.getDaYun ? yun.getDaYun().slice(0, 3) : [];
+      const cycles = daYuns.map(dy => ({
+        ganZhi: dy.getGanZhi ? dy.getGanZhi() : '?',
+        startYear: dy.getStartYear ? dy.getStartYear() : '?'
+      }));
+      cardData = { startAge, cycles };
+    } catch (e) {
+      cardData = {};
+    }
+  } else if (cardType === 'partnerTraits') {
+    const isYang = ['甲','丙','戊','庚','壬'].includes(dayMaster);
+    const dayEl = STEM_ELEMENT[dayMaster];
+    const partnerEl = isYang
+      ? Object.keys(ELEMENT_CONTROLS).find(k => ELEMENT_CONTROLS[k] === dayEl)
+      : ELEMENT_CONTROLS[dayEl];
+    cardData = { partnerElement: ELEMENT_NAMES[partnerEl] || partnerEl || '—' };
+  }
+
+  return {
+    pillars,
+    dayMaster,
+    dayMasterElement,
+    strength: analysis.strength,
+    pattern: analysis.pattern.en,
+    favorableElements,
+    cardData
+  };
+}
+
+// Show error state inside a card's reading container
+function showReadingError(cardEl) {
+  const container = cardEl.querySelector('.reading-container');
+  if (container) {
+    container.innerHTML = '<div class="reading-error"><p>Reading unavailable. Please try again.</p><button class="retry-btn" onclick="retryReading(this)">Retry</button></div>';
+  }
+  cardEl.dataset.readingLoaded = 'error';
+}
+
+// Retry a failed reading
+function retryReading(retryBtn) {
+  const cardEl = retryBtn.closest('.bazi-card');
+  if (!cardEl) return;
+  cardEl.dataset.readingLoaded = '';
+  const btn = cardEl.querySelector('.reveal-btn');
+  if (btn) btn.style.display = '';
+  const container = cardEl.querySelector('.reading-container');
+  if (container) container.innerHTML = '';
+  fetchReading(cardEl, cardEl.dataset.cardType);
+}
+
+// Fetch and stream an AI reading into a card
+async function fetchReading(cardEl, cardType) {
+  if (cardEl.dataset.readingLoaded === 'true') return;
+
+  const btn = cardEl.querySelector('.reveal-btn');
+  if (btn) btn.style.display = 'none';
+
+  let container = cardEl.querySelector('.reading-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'reading-container';
+    cardEl.appendChild(container);
+  }
+  container.innerHTML = '<span class="reading-cursor"></span>';
+  cardEl.dataset.readingLoaded = 'loading';
+
+  const chartSummary = buildChartSummary(window.currentChart, cardType);
+
+  try {
+    const res = await fetch('/api/reading', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chartSummary, cardType, language: window.currentLanguage || 'en' })
+    });
+
+    if (!res.ok) { showReadingError(cardEl); return; }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let accumulated = '';
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop(); // keep incomplete last line
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const payload = line.slice(6).trim();
+        if (payload === '[DONE]') {
+          const cursor = container.querySelector('.reading-cursor');
+          if (cursor) cursor.remove();
+          cardEl.dataset.readingLoaded = 'true';
+          return;
+        }
+        try {
+          const parsed = JSON.parse(payload);
+          if (parsed.error) { showReadingError(cardEl); return; }
+          if (parsed.token) {
+            accumulated += parsed.token;
+            container.innerHTML = renderMarkdown(accumulated) + '<span class="reading-cursor"></span>';
+          }
+        } catch (e) {
+          // ignore malformed JSON lines
+        }
+      }
+    }
+    // Stream ended without [DONE]
+    const cursor = container.querySelector('.reading-cursor');
+    if (cursor) cursor.remove();
+    if (cardEl.dataset.readingLoaded !== 'true') {
+      cardEl.dataset.readingLoaded = 'true';
+    }
+  } catch (e) {
+    showReadingError(cardEl);
+  }
+}
+
 // 1. Chart Overview
 function buildCardChartOverview(eightChar, analysis, input, city, tst) {
   const stems   = [eightChar.getYearGan(), eightChar.getMonthGan(), eightChar.getDayGan(), eightChar.getTimeGan()];
