@@ -7,10 +7,10 @@
 
 ### Chart Generation
 
-- [ ] **CHART-01**: User can input birth date (year, month, day)
-- [ ] **CHART-02**: User can input birth time (hour, minute)
-- [ ] **CHART-03**: User can input birth city via text search
-- [ ] **CHART-04**: System resolves city to timezone and coordinates via geocoding API
+- [x] **CHART-01**: User can input birth date (year, month, day)
+- [x] **CHART-02**: User can input birth time (hour, minute)
+- [x] **CHART-03**: User can input birth city via text search
+- [x] **CHART-04**: System resolves city to timezone and coordinates via geocoding API
 - [ ] **CHART-05**: System calculates Four Pillars chart using existing Bazi JS library
 - [ ] **CHART-06**: System displays 10 cards: day master, five elements balance, lucky elements, ten deity breakdown, luck cycles, special stars, life guidance, ideal partner traits, AI summary, chart overview
 
@@ -68,10 +68,10 @@
 | DEPLOY-01 | Phase 1 | Complete |
 | DEPLOY-02 | Phase 1 | Complete |
 | DEPLOY-03 | Phase 1 | Complete |
-| CHART-01 | Phase 2 | Pending |
-| CHART-02 | Phase 2 | Pending |
-| CHART-03 | Phase 2 | Pending |
-| CHART-04 | Phase 2 | Pending |
+| CHART-01 | Phase 2 | Complete |
+| CHART-02 | Phase 2 | Complete |
+| CHART-03 | Phase 2 | Complete |
+| CHART-04 | Phase 2 | Complete |
 | CHART-05 | Phase 2 | Pending |
 | CHART-06 | Phase 2 | Pending |
 | AI-01 | Phase 3 | Pending |
