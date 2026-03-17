@@ -9,7 +9,7 @@
 ## Phases
 
 - [x] **Phase 1: Project Scaffold & Deployment Pipeline** - Vercel project wired up, serverless function reachable, CI/CD ready
-- [ ] **Phase 2: Chart Input & Bazi Calculation** - User can enter birth data, resolve city, and see a rendered 10-card chart
+- [x] **Phase 2: Chart Input & Bazi Calculation** - User can enter birth data, resolve city, and see a rendered 10-card chart (completed 2026-03-17)
 - [ ] **Phase 3: AI Integration** - All 10 cards expand with Claude-powered deep readings in real time
 - [ ] **Phase 4: Bilingual UI & Production Verification** - Language toggle works end-to-end, app verified fully functional in production
 
@@ -84,7 +84,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
-| 2. Chart Input & Bazi Calculation | 2/3 | In Progress|  |
+| 2. Chart Input & Bazi Calculation | 3/3 | Complete   | 2026-03-17 |
 | 3. AI Integration | 0/? | Not started | - |
 | 4. Bilingual UI & Production Verification | 0/? | Not started | - |
 
