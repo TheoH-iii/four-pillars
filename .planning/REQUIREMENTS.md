@@ -19,8 +19,8 @@
 - [ ] **AI-01**: User can view AI-powered narrative intro for their chart
 - [ ] **AI-02**: User can view structured insights (career, relationships, health, wealth)
 - [ ] **AI-03**: User can click any of the 10 cards to expand and get deeper AI reading for that aspect
-- [ ] **AI-04**: Vercel Serverless Function proxies requests to Claude API
-- [ ] **AI-05**: AI readings are generated based on user's specific chart data
+- [x] **AI-04**: Vercel Serverless Function proxies requests to Claude API
+- [x] **AI-05**: AI readings are generated based on user's specific chart data
 
 ### Bilingual UI
 
@@ -77,8 +77,8 @@
 | AI-01 | Phase 3 | Pending |
 | AI-02 | Phase 3 | Pending |
 | AI-03 | Phase 3 | Pending |
-| AI-04 | Phase 3 | Pending |
-| AI-05 | Phase 3 | Pending |
+| AI-04 | Phase 3 | Complete |
+| AI-05 | Phase 3 | Complete |
 | UI-01 | Phase 4 | Pending |
 | UI-02 | Phase 4 | Pending |
 | UI-03 | Phase 4 | Pending |

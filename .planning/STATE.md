@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Not started
-status: planning
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-17T15:00:15.946Z"
+current_plan: 03-02
+status: in-progress
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-03-17T15:21:00Z"
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 25
+  total_plans: 7
+  completed_plans: 7
+  percent: 30
 ---
 
 # Project State: Four Pillars of Destiny (Bazi) Web App
@@ -28,22 +28,22 @@ progress:
 
 ## Current Position
 
-**Phase:** 2 - Chart Input & Bazi Calculation
-**Current Plan:** Not started
-**Status:** Ready to plan
+**Phase:** 3 - AI Integration
+**Current Plan:** 03-02
+**Status:** In progress
 
 ```
-Progress: [#####-----] 25%
-Phase 1 [x] Phase 2 [~] Phase 3 [ ] Phase 4 [ ]
+Progress: [######----] 30%
+Phase 1 [x] Phase 2 [x] Phase 3 [~] Phase 4 [ ]
 ```
 
 ---
 
 ## Performance Metrics
 
-- Phases complete: 1/4
-- Plans complete: 6 total (2 Phase 1 + 4 Phase 2)
-- Requirements satisfied: 11/17 (DEPLOY-01, DEPLOY-02, DEPLOY-03, CHART-01, CHART-02, CHART-03, CHART-04, CHART-05, CHART-06)
+- Phases complete: 2/4
+- Plans complete: 7 total (2 Phase 1 + 4 Phase 2 + 1 Phase 3)
+- Requirements satisfied: 13/17 (DEPLOY-01, DEPLOY-02, DEPLOY-03, CHART-01, CHART-02, CHART-03, CHART-04, CHART-05, CHART-06, AI-04, AI-05)
 
 | Phase | Plan | Duration | Tasks | Files |
 |-------|------|----------|-------|-------|
@@ -51,6 +51,7 @@ Phase 1 [x] Phase 2 [~] Phase 3 [ ] Phase 4 [ ]
 | 02    | 02   | 3min     | 3     | 3     |
 | 02    | 03   | 15min    | 3     | 2     |
 | 02    | 04   | 5min     | 1     | 1     |
+| 03    | 01   | 3min     | 2     | 2     |
 
 ---
 
@@ -75,6 +76,9 @@ Phase 1 [x] Phase 2 [~] Phase 3 [ ] Phase 4 [ ]
 - Luck Cycles card wrapped in try/catch for graceful degradation if yun API unavailable
 - Card builder pattern: buildCard*() returns { title, body }, renderCards() maps array to HTML
 - Yin day master partner element uses ELEMENT_CONTROLS[dayEl] (官星); yang uses reverse lookup (财星)
+- Native fetch over Anthropic SDK in api/reading.js — zero added dependencies, Node 18 runtime supports it natively
+- claude-3-5-haiku-20241022 chosen for fast cost-effective streaming (600 tokens)
+- SSE line buffer across stream chunks prevents partial JSON parse errors at chunk boundaries
 
 ### Active Todos
 - None
@@ -86,9 +90,9 @@ Phase 1 [x] Phase 2 [~] Phase 3 [ ] Phase 4 [ ]
 
 ## Session Continuity
 
-**Last session:** 2026-03-17T15:00:15.915Z
-**Stopped at:** Phase 3 context gathered
-**Next action:** Begin Phase 3 (AI reading)
+**Last session:** 2026-03-17T15:21:00Z
+**Stopped at:** Completed 03-01-PLAN.md
+**Next action:** Execute 03-02 (client-side SSE integration)
 
 ---
 
