@@ -145,10 +145,208 @@ function initBackButton() {
   });
 }
 
-// ── renderCards placeholder (implemented in Plan 03) ───
+// ── Card Rendering ─────────────────────────────────────
+
 function renderCards(chart) {
   const container = document.getElementById('cards-container');
-  container.innerHTML = '<p>Chart calculated. Cards rendering coming soon.</p>';
+  const { eightChar, yun, analysis, input, city, tst } = chart;
+
+  const cards = [
+    buildCardChartOverview(eightChar, analysis, input, city, tst),
+    buildCardDayMaster(eightChar, analysis),
+    buildCardFiveElements(eightChar, analysis),
+    buildCardLuckyElements(analysis),
+    buildCardTenDeities(eightChar, analysis),
+    buildCardLuckCycles(yun),
+    buildCardSpecialStars(analysis),
+    buildCardLifeGuidance(analysis),
+    buildCardPartnerTraits(eightChar, analysis),
+    buildCardAISummary()
+  ];
+
+  container.innerHTML = cards.map(c => `
+    <div class="bazi-card">
+      <h2 class="card-title">${c.title}</h2>
+      <div class="card-body">${c.body}</div>
+    </div>
+  `).join('');
+}
+
+// Helper: render a list of data rows
+function dataRows(rows) {
+  return rows.map(([label, value]) =>
+    `<div class="data-row"><span class="data-label">${label}</span><span class="data-value">${value}</span></div>`
+  ).join('');
+}
+
+// 1. Chart Overview
+function buildCardChartOverview(eightChar, analysis, input, city, tst) {
+  const stems   = [eightChar.getYearGan(), eightChar.getMonthGan(), eightChar.getDayGan(), eightChar.getTimeGan()];
+  const branches = [eightChar.getYearZhi(), eightChar.getMonthZhi(), eightChar.getDayZhi(), eightChar.getTimeZhi()];
+  const pillars = stems.map((s, i) => `${s}${branches[i]}`).join(' · ');
+  return {
+    title: 'Chart Overview',
+    body: dataRows([
+      ['Pillars', pillars],
+      ['Pattern', `${analysis.pattern.en} (${analysis.pattern.name})`],
+      ['City', city.name],
+      ['True Solar Time', `${String(tst.h).padStart(2,'0')}:${String(tst.m).padStart(2,'0')}`]
+    ])
+  };
+}
+
+// 2. Day Master
+function buildCardDayMaster(eightChar, analysis) {
+  const dayStem = eightChar.getDayGan();
+  const el = STEM_ELEMENT[dayStem];
+  const elName = ELEMENT_NAMES[el] || el;
+  const polarity = dayStem ? (['甲','丙','戊','庚','壬'].includes(dayStem) ? 'Yang' : 'Yin') : '';
+  return {
+    title: 'Day Master',
+    body: dataRows([
+      ['Stem', dayStem],
+      ['Element', elName],
+      ['Polarity', polarity],
+      ['Strength', analysis.strength === 'strong' ? 'Strong (身强)' : 'Weak (身弱)']
+    ])
+  };
+}
+
+// 3. Five Elements Balance
+function buildCardFiveElements(eightChar, analysis) {
+  const stems   = [eightChar.getYearGan(), eightChar.getMonthGan(), eightChar.getDayGan(), eightChar.getTimeGan()];
+  const branches = [eightChar.getYearZhi(), eightChar.getMonthZhi(), eightChar.getDayZhi(), eightChar.getTimeZhi()];
+  const counts = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+  stems.forEach(s => { if (STEM_ELEMENT[s]) counts[STEM_ELEMENT[s]]++; });
+  branches.forEach(b => {
+    const hidden = BRANCH_HIDDEN_STEMS[b] || [];
+    hidden.forEach(hs => { if (STEM_ELEMENT[hs]) counts[STEM_ELEMENT[hs]] += 0.5; });
+  });
+  const sorted = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([el, n]) => `${ELEMENT_NAMES[el]} ${n > 0 ? n.toFixed(n % 1 === 0 ? 0 : 1) : '0'}`);
+  return {
+    title: 'Five Elements Balance',
+    body: dataRows([
+      ['Distribution', sorted.slice(0, 3).join(' · ')],
+      ['Also', sorted.slice(3).join(' · ')],
+      ['Strongest', sorted[0].split(' ')[0]],
+      ['Weakest', sorted[sorted.length - 1].split(' ')[0]]
+    ])
+  };
+}
+
+// 4. Lucky Elements
+function buildCardLuckyElements(analysis) {
+  const favorable = formatElementNames(analysis.favorable);
+  const allEls = ['Wood','Fire','Earth','Metal','Water'];
+  const unfavorable = allEls.filter(e => !favorable.includes(e));
+  return {
+    title: 'Lucky Elements',
+    body: dataRows([
+      ['Favorable', favorable.join(', ') || '—'],
+      ['Unfavorable', unfavorable.slice(0, 2).join(', ') || '—'],
+      ['Basis', analysis.strength === 'strong' ? 'Strong chart — needs control' : 'Weak chart — needs support']
+    ])
+  };
+}
+
+// 5. Ten Deity Breakdown
+function buildCardTenDeities(eightChar, analysis) {
+  const dist = getDeityDistribution(analysis.tenDeities);
+  const dayStem = eightChar.getDayGan();
+  const top3 = Object.entries(dist)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([deity, count]) => `${DEITY_NAMES.en[deity] || deity} ×${count}`);
+  return {
+    title: 'Ten Deity Breakdown',
+    body: dataRows([
+      ['Day Master', dayStem],
+      ['Dominant', top3[0] || '—'],
+      ['Secondary', top3[1] || '—'],
+      ['Third', top3[2] || '—']
+    ])
+  };
+}
+
+// 6. Luck Cycles
+function buildCardLuckCycles(yun) {
+  try {
+    const startAge = yun.getStartYear ? yun.getStartYear() : '?';
+    const daYuns = yun.getDaYun ? yun.getDaYun().slice(0, 3) : [];
+    const cycleRows = daYuns.map(dy => {
+      const gz = dy.getGanZhi ? dy.getGanZhi() : '?';
+      const yr = dy.getStartYear ? dy.getStartYear() : '?';
+      return [gz, `from ${yr}`];
+    });
+    return {
+      title: 'Luck Cycles',
+      body: dataRows([
+        ['Cycles begin age', String(startAge)],
+        ...cycleRows
+      ])
+    };
+  } catch (e) {
+    return { title: 'Luck Cycles', body: dataRows([['Status', 'Unavailable']]) };
+  }
+}
+
+// 7. Special Stars
+function buildCardSpecialStars(analysis) {
+  const stars = analysis.stars;
+  return {
+    title: 'Special Stars',
+    body: dataRows(
+      stars.length > 0
+        ? stars.map(s => [s, 'Present'])
+        : [['Stars', 'None detected']]
+    )
+  };
+}
+
+// 8. Life Guidance
+function buildCardLifeGuidance(analysis) {
+  const favorable = formatElementNames(analysis.favorable);
+  const isStrong = analysis.strength === 'strong';
+  return {
+    title: 'Life Guidance',
+    body: dataRows([
+      ['Chart Type', isStrong ? 'Strong — assertive, self-reliant' : 'Weak — collaborative, adaptive'],
+      ['Enhance with', favorable.join(', ') || '—'],
+      ['Pattern', analysis.pattern.en]
+    ])
+  };
+}
+
+// 9. Ideal Partner Traits
+function buildCardPartnerTraits(eightChar, analysis) {
+  const dayStem = eightChar.getDayGan();
+  const isYang = ['甲','丙','戊','庚','壬'].includes(dayStem);
+  const dayEl = STEM_ELEMENT[dayStem];
+  const partnerEl = isYang
+    ? Object.keys(ELEMENT_CONTROLS).find(k => ELEMENT_CONTROLS[k] === dayEl)
+    : Object.keys(ELEMENT_CONTROLS).find(k => ELEMENT_CONTROLS[k] === dayEl);
+  const partnerElName = ELEMENT_NAMES[partnerEl] || '—';
+  return {
+    title: 'Ideal Partner Traits',
+    body: dataRows([
+      ['Partner element', partnerElName],
+      ['Compatibility', analysis.strength === 'strong' ? 'Grounding, steady' : 'Supportive, nurturing'],
+      ['Key quality', analysis.pattern.en.includes('Officer') ? 'Disciplined, structured' : 'Adaptable, resourceful']
+    ])
+  };
+}
+
+// 10. AI Summary Placeholder
+function buildCardAISummary() {
+  return {
+    title: 'AI Summary',
+    body: `<div class="ai-placeholder">
+      <p>Personalized AI reading available in the next phase.</p>
+      <p class="ai-hint">Your chart data has been calculated and is ready for AI analysis.</p>
+    </div>`
+  };
 }
 
 // ── Init ───────────────────────────────────────────────
