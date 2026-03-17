@@ -62,7 +62,11 @@ Plans:
   3. User can click any of the 10 cards and receive a deeper AI reading for that specific aspect
   4. AI readings visibly reflect the user's actual chart data, not generic text
   5. All AI requests route through the Vercel serverless proxy without exposing the API key client-side
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Implement streaming Claude proxy in api/reading.js and bump vercel.json maxDuration
+- [ ] 03-02-PLAN.md — Add reveal buttons, streaming render, markdown display, and error/retry UI to all cards
 
 ---
 
@@ -86,7 +90,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
 | 2. Chart Input & Bazi Calculation | 4/4 | Complete   | 2026-03-17 |
-| 3. AI Integration | 0/? | Not started | - |
+| 3. AI Integration | 0/2 | Not started | - |
 | 4. Bilingual UI & Production Verification | 0/? | Not started | - |
 
 ---
