@@ -7,12 +7,63 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- Form Screen -->
+<div id="form-screen">
   <h1>Four Pillars of Destiny</h1>
-  <p>Coming soon.</p>
-  <script src="bazi-engine.js"></script>
-  <script src="solar.js"></script>
-  <script src="cities.js"></script>
-  <script src="i18n.js"></script>
-  <script src="app.js"></script>
+  <form id="birth-form" novalidate>
+
+    <div class="field-group">
+      <label>Birth Date</label>
+      <div class="date-fields">
+        <input type="number" id="year"  name="year"  placeholder="Year"   min="1900" max="2100" required>
+        <input type="number" id="month" name="month" placeholder="Month"  min="1"    max="12"   required>
+        <input type="number" id="day"   name="day"   placeholder="Day"    min="1"    max="31"   required>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Birth Time</label>
+      <div class="time-fields">
+        <input type="number" id="hour"   name="hour"   placeholder="Hour"   min="0" max="23" required>
+        <input type="number" id="minute" name="minute" placeholder="Minute" min="0" max="59" required>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Birth City</label>
+      <div class="city-wrapper">
+        <input type="text" id="city-input" name="city" placeholder="Type city name..." autocomplete="off" required>
+        <ul id="city-suggestions" hidden></ul>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Gender</label>
+      <select id="gender" name="gender">
+        <option value="1">Male</option>
+        <option value="0">Female</option>
+      </select>
+    </div>
+
+    <button type="submit" id="submit-btn">Calculate Chart</button>
+    <p id="form-error" class="error-msg" hidden></p>
+
+  </form>
+</div>
+
+<!-- Chart Screen -->
+<div id="chart-screen" hidden>
+  <button id="back-btn">← New Chart</button>
+  <div id="cards-container"></div>
+</div>
+
+<!-- Scripts: order matters — engine globals must load before app.js -->
+<script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
+<script src="bazi-engine.js"></script>
+<script src="solar.js"></script>
+<script src="cities.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
