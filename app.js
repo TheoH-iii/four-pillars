@@ -326,7 +326,7 @@ function buildCardPartnerTraits(eightChar, analysis) {
   const dayEl = STEM_ELEMENT[dayStem];
   const partnerEl = isYang
     ? Object.keys(ELEMENT_CONTROLS).find(k => ELEMENT_CONTROLS[k] === dayEl)
-    : Object.keys(ELEMENT_CONTROLS).find(k => ELEMENT_CONTROLS[k] === dayEl);
+    : ELEMENT_CONTROLS[dayEl];
   const partnerElName = ELEMENT_NAMES[partnerEl] || '—';
   return {
     title: 'Ideal Partner Traits',
