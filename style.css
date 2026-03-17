@@ -1,2 +1,177 @@
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; font-family: sans-serif; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f0f1a;
+  color: #e8e0d0;
+  min-height: 100vh;
+}
+
+/* ── Form Screen ─────────────────────────────────────── */
+#form-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+#form-screen h1 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  color: #c9a96e;
+}
+
+#birth-form {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field-group label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a8090;
+  margin-bottom: 0.4rem;
+}
+
+.date-fields,
+.time-fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.time-fields {
+  grid-template-columns: 1fr 1fr;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: #1a1a2e;
+  border: 1px solid #2e2e4a;
+  border-radius: 6px;
+  color: #e8e0d0;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+select:focus {
+  border-color: #c9a96e;
+}
+
+/* Remove number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* ── City Autocomplete ───────────────────────────────── */
+.city-wrapper {
+  position: relative;
+}
+
+#city-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #1a1a2e;
+  border: 1px solid #2e2e4a;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#city-suggestions li {
+  padding: 0.55rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #2e2e4a;
+}
+
+#city-suggestions li:last-child { border-bottom: none; }
+
+#city-suggestions li:hover {
+  background: #252540;
+  color: #c9a96e;
+}
+
+/* ── Submit Button ───────────────────────────────────── */
+#submit-btn {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #c9a96e;
+  color: #0f0f1a;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+#submit-btn:hover:not(:disabled) { opacity: 0.85; }
+#submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.error-msg {
+  color: #e07070;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ── Chart Screen ────────────────────────────────────── */
+#chart-screen {
+  padding: 1.5rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+#back-btn {
+  background: none;
+  border: 1px solid #2e2e4a;
+  color: #8a8090;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#back-btn:hover {
+  color: #c9a96e;
+  border-color: #c9a96e;
+}
+
+#cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  #cards-container { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #cards-container { grid-template-columns: repeat(2, 1fr); }
+}
