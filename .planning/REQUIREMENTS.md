@@ -31,9 +31,9 @@
 
 ### Deployment
 
-- [ ] **DEPLOY-01**: Front-end is pure HTML, CSS, and JavaScript (no framework)
-- [ ] **DEPLOY-02**: Serverless function handles AI proxy on Vercel
-- [ ] **DEPLOY-03**: Application deploys successfully to Vercel
+- [x] **DEPLOY-01**: Front-end is pure HTML, CSS, and JavaScript (no framework)
+- [x] **DEPLOY-02**: Serverless function handles AI proxy on Vercel
+- [x] **DEPLOY-03**: Application deploys successfully to Vercel
 - [ ] **DEPLOY-04**: All features work in production environment
 
 ## v2 Requirements
@@ -65,9 +65,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DEPLOY-01 | Phase 1 | Pending |
-| DEPLOY-02 | Phase 1 | Pending |
-| DEPLOY-03 | Phase 1 | Pending |
+| DEPLOY-01 | Phase 1 | Complete |
+| DEPLOY-02 | Phase 1 | Complete |
+| DEPLOY-03 | Phase 1 | Complete |
 | CHART-01 | Phase 2 | Pending |
 | CHART-02 | Phase 2 | Pending |
 | CHART-03 | Phase 2 | Pending |
@@ -92,4 +92,4 @@
 
 ---
 *Requirements defined: 2026-03-16*
-*Last updated: 2026-03-17 after roadmap creation*
+*Last updated: 2026-03-17 after Phase 1 completion (DEPLOY-01, DEPLOY-02, DEPLOY-03 satisfied)*
