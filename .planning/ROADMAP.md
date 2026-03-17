@@ -42,12 +42,13 @@ Plans:
   2. User can type a city name and select from geocoded suggestions, resolving to timezone and coordinates
   3. After submitting, all 10 cards render on screen: day master, five elements balance, lucky elements, ten deity breakdown, luck cycles, special stars, life guidance, ideal partner traits, AI summary placeholder, chart overview
   4. Chart data is visually distinct and readable on both desktop and mobile viewports
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
 - [x] 02-01-PLAN.md — Copy and enhance engine files (bazi-engine.js, solar.js, cities.js) with full hidden stems and geocoding
-- [ ] 02-02-PLAN.md — Build input form, city autocomplete, geocoding wiring, and screen switching
-- [ ] 02-03-PLAN.md — Render all 10 Bazi cards from calculated chart data
+- [x] 02-02-PLAN.md — Build input form, city autocomplete, geocoding wiring, and screen switching
+- [x] 02-03-PLAN.md — Render all 10 Bazi cards from calculated chart data
+- [x] 02-04-PLAN.md — Fix dead ternary in buildCardPartnerTraits() for correct yin/yang partner element logic
 
 ---
 
@@ -84,7 +85,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
-| 2. Chart Input & Bazi Calculation | 3/3 | Complete   | 2026-03-17 |
+| 2. Chart Input & Bazi Calculation | 4/4 | Complete   | 2026-03-17 |
 | 3. AI Integration | 0/? | Not started | - |
 | 4. Bilingual UI & Production Verification | 0/? | Not started | - |
 
