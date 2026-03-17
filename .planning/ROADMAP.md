@@ -45,7 +45,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Copy and enhance engine files (bazi-engine.js, solar.js, cities.js) with full hidden stems and geocoding
+- [x] 02-01-PLAN.md — Copy and enhance engine files (bazi-engine.js, solar.js, cities.js) with full hidden stems and geocoding
 - [ ] 02-02-PLAN.md — Build input form, city autocomplete, geocoding wiring, and screen switching
 - [ ] 02-03-PLAN.md — Render all 10 Bazi cards from calculated chart data
 
@@ -84,7 +84,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
-| 2. Chart Input & Bazi Calculation | 0/? | Not started | - |
+| 2. Chart Input & Bazi Calculation | 1/3 | In progress | - |
 | 3. AI Integration | 0/? | Not started | - |
 | 4. Bilingual UI & Production Verification | 0/? | Not started | - |
 
