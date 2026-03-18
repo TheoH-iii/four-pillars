@@ -42,20 +42,20 @@ function initCityAutocomplete() {
   });
 }
 
-// ── Form Validation ─────────────────────────────────���──
+// ── Form Validation ─────────────────────────────────���───
 function validateForm(data) {
   const year = data.year, month = data.month, day = data.day;
   const hour = data.hour, minute = data.minute, city = data.city;
-  if (!year || year < 1900 || year > 2100) return 'Year must be between 1900 and 2100';
-  if (!month || month < 1 || month > 12)   return 'Month must be between 1 and 12';
-  if (!day   || day < 1   || day > 31)     return 'Day must be between 1 and 31';
-  if (hour === '' || isNaN(hour) || hour < 0 || hour > 23) return 'Hour must be between 0 and 23';
-  if (minute === '' || isNaN(minute) || minute < 0 || minute > 59) return 'Minute must be between 0 and 59';
-  if (!city || city.trim().length < 1)     return 'Please enter a birth city';
+  if (!year || year < 1900 || year > 2100) return t('validYear');
+  if (!month || month < 1 || month > 12)   return t('validMonth');
+  if (!day   || day < 1   || day > 31)     return t('validDay');
+  if (hour === '' || isNaN(hour) || hour < 0 || hour > 23) return t('validHour');
+  if (minute === '' || isNaN(minute) || minute < 0 || minute > 59) return t('validMinute');
+  if (!city || city.trim().length < 1)     return t('validCity');
   return null;
 }
 
-// ── Screen Switching ���──────────────────────────────────
+// ── Screen Switching ─────────────────────────────────��──
 function showScreen(id) {
   document.getElementById('form-screen').hidden  = (id !== 'form-screen');
   document.getElementById('chart-screen').hidden = (id !== 'chart-screen');
@@ -86,13 +86,13 @@ async function handleFormSubmit(e) {
   }
   errorEl.hidden = true;
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Calculating...';
+  submitBtn.textContent = t('btnCalculating');
 
   try {
     // Geocode city (Nominatim primary, local fallback)
     const cityResult = await geocodeCity(data.city);
     if (!cityResult) {
-      throw new Error('Could not resolve city. Please try a different city name.');
+      throw new Error(t('errorCityNotFound'));
     }
     selectedCity = cityResult;
 
@@ -116,7 +116,7 @@ async function handleFormSubmit(e) {
     // Run Bazi analysis
     const analysis = analyzeBazi(eightChar, yun, data.gender);
 
-    // Store chart data for card rendering (Plan 03 will use this)
+    // Store chart data for card rendering
     window.currentChart = {
       input: data,
       city: selectedCity,
@@ -130,11 +130,11 @@ async function handleFormSubmit(e) {
     renderCards(window.currentChart);
 
   } catch (err) {
-    errorEl.textContent = err.message || 'An error occurred. Please try again.';
+    errorEl.textContent = err.message || t('errorGeneric');
     errorEl.hidden = false;
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Calculate Chart';
+    submitBtn.textContent = t('btnCalculate');
   }
 }
 
@@ -171,7 +171,7 @@ function renderCards(chart) {
       <h2 class="card-title">${c.title}</h2>
       <div class="card-body">${c.body}</div>
       <div class="reading-container"></div>
-      <button class="reveal-btn" onclick="fetchReading(this.closest('.bazi-card'), this.closest('.bazi-card').dataset.cardType)">Reveal Reading</button>
+      <button class="reveal-btn" onclick="fetchReading(this.closest('.bazi-card'), this.closest('.bazi-card').dataset.cardType)">${t('btnReveal')}</button>
     </div>
   `).join('');
 }
@@ -181,6 +181,20 @@ function dataRows(rows) {
   return rows.map(([label, value]) =>
     `<div class="data-row"><span class="data-label">${label}</span><span class="data-value">${value}</span></div>`
   ).join('');
+}
+
+// Helper: return element label in current language
+function elLabel(el) {
+  if (window.currentLanguage === 'zh') {
+    var ZH_EL = { wood: '木', fire: '火', earth: '土', metal: '金', water: '水' };
+    return ZH_EL[el] || el;
+  }
+  return ELEMENT_NAMES[el] || el;
+}
+
+// Helper: format element array using elLabel
+function formatElementLabels(arr) {
+  return (arr || []).map(function(el) { return elLabel(el); });
 }
 
 // ── AI Reading ─────────────────────────────────────────
@@ -276,7 +290,7 @@ function buildChartSummary(chart, cardType) {
 function showReadingError(cardEl) {
   const container = cardEl.querySelector('.reading-container');
   if (container) {
-    container.innerHTML = '<div class="reading-error"><p>Reading unavailable. Please try again.</p><button class="retry-btn" onclick="retryReading(this)">Retry</button></div>';
+    container.innerHTML = '<div class="reading-error"><p>' + t('errorReadingUnavailable') + '</p><button class="retry-btn" onclick="retryReading(this)">' + t('btnRetry') + '</button></div>';
   }
   cardEl.dataset.readingLoaded = 'error';
 }
@@ -368,13 +382,16 @@ function buildCardChartOverview(eightChar, analysis, input, city, tst) {
   const stems   = [eightChar.getYearGan(), eightChar.getMonthGan(), eightChar.getDayGan(), eightChar.getTimeGan()];
   const branches = [eightChar.getYearZhi(), eightChar.getMonthZhi(), eightChar.getDayZhi(), eightChar.getTimeZhi()];
   const pillars = stems.map((s, i) => `${s}${branches[i]}`).join(' · ');
+  const patternDisplay = window.currentLanguage === 'zh'
+    ? (analysis.pattern.name + ' (' + analysis.pattern.en + ')')
+    : (analysis.pattern.en + ' (' + analysis.pattern.name + ')');
   return {
-    title: 'Chart Overview',
+    title: t('cardOverview'),
     body: dataRows([
-      ['Pillars', pillars],
-      ['Pattern', `${analysis.pattern.en} (${analysis.pattern.name})`],
-      ['City', city.name],
-      ['True Solar Time', `${String(tst.h).padStart(2,'0')}:${String(tst.m).padStart(2,'0')}`]
+      [t('labelPillars'), pillars],
+      [t('labelPattern'), patternDisplay],
+      [t('labelCity'), city.name],
+      [t('labelTrueSolarTime'), `${String(tst.h).padStart(2,'0')}:${String(tst.m).padStart(2,'0')}`]
     ])
   };
 }
@@ -384,14 +401,17 @@ function buildCardDayMaster(eightChar, analysis) {
   const dayStem = eightChar.getDayGan();
   const el = STEM_ELEMENT[dayStem];
   const elName = ELEMENT_NAMES[el] || el;
-  const polarity = dayStem ? (['甲','丙','戊','庚','壬'].includes(dayStem) ? 'Yang' : 'Yin') : '';
+  const polarity = dayStem ? (['甲','丙','戊','庚','壬'].includes(dayStem) ? t('polarityYang') : t('polarityYin')) : '';
+  const stemDisplay = window.currentLanguage === 'zh'
+    ? dayStem
+    : (dayStem + (window.STEM_EN && window.STEM_EN[dayStem] ? ' · ' + window.STEM_EN[dayStem] : ''));
   return {
-    title: 'Day Master',
+    title: t('cardDayMaster'),
     body: dataRows([
-      ['Stem', dayStem],
-      ['Element', elName],
-      ['Polarity', polarity],
-      ['Strength', analysis.strength === 'strong' ? 'Strong (身强)' : 'Weak (身弱)']
+      [t('labelStem'), stemDisplay],
+      [t('labelElement'), elName],
+      [t('labelPolarity'), polarity],
+      [t('labelStrength'), analysis.strength === 'strong' ? t('strengthStrong') : t('strengthWeak')]
     ])
   };
 }
@@ -408,29 +428,31 @@ function buildCardFiveElements(eightChar, analysis) {
   });
   const sorted = Object.entries(counts)
     .sort((a, b) => b[1] - a[1])
-    .map(([el, n]) => `${ELEMENT_NAMES[el]} ${n > 0 ? n.toFixed(n % 1 === 0 ? 0 : 1) : '0'}`);
+    .map(([el, n]) => `${elLabel(el)} ${n > 0 ? n.toFixed(n % 1 === 0 ? 0 : 1) : '0'}`);
   return {
-    title: 'Five Elements Balance',
+    title: t('cardFiveElements'),
     body: dataRows([
-      ['Distribution', sorted.slice(0, 3).join(' · ')],
-      ['Also', sorted.slice(3).join(' · ')],
-      ['Strongest', sorted[0].split(' ')[0]],
-      ['Weakest', sorted[sorted.length - 1].split(' ')[0]]
+      [t('labelDistribution'), sorted.slice(0, 3).join(' · ')],
+      [t('labelAlso'), sorted.slice(3).join(' · ')],
+      [t('labelStrongest'), sorted[0].split(' ')[0]],
+      [t('labelWeakest'), sorted[sorted.length - 1].split(' ')[0]]
     ])
   };
 }
 
 // 4. Lucky Elements
 function buildCardLuckyElements(analysis) {
-  const favorable = formatElementNames(analysis.favorable);
-  const allEls = ['Wood','Fire','Earth','Metal','Water'];
-  const unfavorable = allEls.filter(e => !favorable.includes(e));
+  const favorable = formatElementLabels(analysis.favorable);
+  const allEls = ['wood', 'fire', 'earth', 'metal', 'water'];
+  const unfavorable = allEls
+    .filter(e => !(analysis.favorable || []).includes(e))
+    .map(e => elLabel(e));
   return {
-    title: 'Lucky Elements',
+    title: t('cardLuckyElements'),
     body: dataRows([
-      ['Favorable', favorable.join(', ') || '—'],
-      ['Unfavorable', unfavorable.slice(0, 2).join(', ') || '—'],
-      ['Basis', analysis.strength === 'strong' ? 'Strong chart — needs control' : 'Weak chart — needs support']
+      [t('labelFavorable'), favorable.join(', ') || '—'],
+      [t('labelUnfavorable'), unfavorable.slice(0, 2).join(', ') || '—'],
+      [t('labelBasis'), analysis.strength === 'strong' ? t('strengthStrongBasis') : t('strengthWeakBasis')]
     ])
   };
 }
@@ -442,14 +464,14 @@ function buildCardTenDeities(eightChar, analysis) {
   const top3 = Object.entries(dist)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
-    .map(([deity, count]) => `${DEITY_NAMES.en[deity] || deity} ×${count}`);
+    .map(([deity, count]) => `${(window.currentLanguage === 'zh' ? (DEITY_NAMES.zh && DEITY_NAMES.zh[deity]) : DEITY_NAMES.en[deity]) || deity} ×${count}`);
   return {
-    title: 'Ten Deity Breakdown',
+    title: t('cardTenDeities'),
     body: dataRows([
-      ['Day Master', dayStem],
-      ['Dominant', top3[0] || '—'],
-      ['Secondary', top3[1] || '—'],
-      ['Third', top3[2] || '—']
+      [t('labelDayMaster'), dayStem],
+      [t('labelDominant'), top3[0] || '—'],
+      [t('labelSecondary'), top3[1] || '—'],
+      [t('labelThird'), top3[2] || '—']
     ])
   };
 }
@@ -462,17 +484,17 @@ function buildCardLuckCycles(yun) {
     const cycleRows = daYuns.map(dy => {
       const gz = dy.getGanZhi ? dy.getGanZhi() : '?';
       const yr = dy.getStartYear ? dy.getStartYear() : '?';
-      return [gz, `from ${yr}`];
+      return [gz, t('cycleFrom') + ' ' + yr];
     });
     return {
-      title: 'Luck Cycles',
+      title: t('cardLuckCycles'),
       body: dataRows([
-        ['Cycles begin age', String(startAge)],
+        [t('labelCyclesBeginAge'), String(startAge)],
         ...cycleRows
       ])
     };
   } catch (e) {
-    return { title: 'Luck Cycles', body: dataRows([['Status', 'Unavailable']]) };
+    return { title: t('cardLuckCycles'), body: dataRows([[t('labelStatus'), t('cycleUnavailable')]]) };
   }
 }
 
@@ -480,25 +502,25 @@ function buildCardLuckCycles(yun) {
 function buildCardSpecialStars(analysis) {
   const stars = analysis.stars;
   return {
-    title: 'Special Stars',
+    title: t('cardSpecialStars'),
     body: dataRows(
       stars.length > 0
-        ? stars.map(s => [s, 'Present'])
-        : [['Stars', 'None detected']]
+        ? stars.map(s => [s, t('starsPresent')])
+        : [[t('labelStars'), t('starsNone')]]
     )
   };
 }
 
 // 8. Life Guidance
 function buildCardLifeGuidance(analysis) {
-  const favorable = formatElementNames(analysis.favorable);
+  const favorable = formatElementLabels(analysis.favorable);
   const isStrong = analysis.strength === 'strong';
   return {
-    title: 'Life Guidance',
+    title: t('cardLifeGuidance'),
     body: dataRows([
-      ['Chart Type', isStrong ? 'Strong — assertive, self-reliant' : 'Weak — collaborative, adaptive'],
-      ['Enhance with', favorable.join(', ') || '—'],
-      ['Pattern', analysis.pattern.en]
+      [t('labelChartType'), isStrong ? t('strengthStrongDesc') : t('strengthWeakDesc')],
+      [t('labelEnhanceWith'), favorable.join(', ') || '—'],
+      [t('labelPattern'), analysis.pattern.en]
     ])
   };
 }
@@ -511,13 +533,13 @@ function buildCardPartnerTraits(eightChar, analysis) {
   const partnerEl = isYang
     ? Object.keys(ELEMENT_CONTROLS).find(k => ELEMENT_CONTROLS[k] === dayEl)
     : ELEMENT_CONTROLS[dayEl];
-  const partnerElName = ELEMENT_NAMES[partnerEl] || '—';
+  const partnerElName = elLabel(partnerEl) || '—';
   return {
-    title: 'Ideal Partner Traits',
+    title: t('cardPartnerTraits'),
     body: dataRows([
-      ['Partner element', partnerElName],
-      ['Compatibility', analysis.strength === 'strong' ? 'Grounding, steady' : 'Supportive, nurturing'],
-      ['Key quality', analysis.pattern.en.includes('Officer') ? 'Disciplined, structured' : 'Adaptable, resourceful']
+      [t('labelPartnerElement'), partnerElName],
+      [t('labelCompatibility'), analysis.strength === 'strong' ? t('compatGrounding') : t('compatSupportive')],
+      [t('labelKeyQuality'), analysis.pattern.en.includes('Officer') ? t('qualityDisciplined') : t('qualityAdaptable')]
     ])
   };
 }
@@ -525,7 +547,7 @@ function buildCardPartnerTraits(eightChar, analysis) {
 // 10. AI Summary
 function buildCardAISummary() {
   return {
-    title: 'AI Summary',
+    title: t('cardAISummary'),
     body: ''
   };
 }
