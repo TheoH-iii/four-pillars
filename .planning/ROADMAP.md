@@ -84,7 +84,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — Fill i18n.js with full EN/zh-TW translations, add language toggle and Google Fonts to index.html
-- [ ] 04-02-PLAN.md — Replace style.css with warm cream theme ported from v1-backup
+- [x] 04-02-PLAN.md — Replace style.css with warm cream theme ported from v1-backup
 - [ ] 04-03-PLAN.md — Wire t() calls throughout app.js, replace all hardcoded UI strings
 - [ ] 04-04-PLAN.md — Commit, deploy to Vercel, and verify all 17 requirements on production URL
 
@@ -97,7 +97,7 @@ Plans:
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
 | 2. Chart Input & Bazi Calculation | 4/4 | Complete   | 2026-03-17 |
 | 3. AI Integration | 2/2 | Complete | 2026-03-17 |
-| 4. Bilingual UI & Production Verification | 1/4 | In progress | - |
+| 4. Bilingual UI & Production Verification | 2/4 | In progress | - |
 
 ---
 
