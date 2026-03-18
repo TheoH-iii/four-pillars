@@ -193,6 +193,8 @@ window.setLanguage = function(lang) {
   });
   // Update page title
   document.title = window.t('pageTitle');
+  // Update static form DOM nodes
+  window.applyFormTranslations();
   // Re-render cards if chart is visible
   if (window.currentChart && !document.getElementById('chart-screen').hidden) {
     renderCards(window.currentChart);
@@ -206,6 +208,37 @@ window.STEM_EN = {
   '戊': 'Yang Earth', '己': 'Yin Earth',
   '庚': 'Yang Metal', '辛': 'Yin Metal',
   '壬': 'Yang Water', '癸': 'Yin Water'
+};
+
+window.applyFormTranslations = function() {
+  var h1 = document.querySelector('#form-screen h1');
+  if (h1) h1.textContent = window.t('h1');
+
+  var labels = document.querySelectorAll('#birth-form label');
+  var labelKeys = ['labelBirthDate', 'labelBirthTime', 'labelBirthCity', 'labelGender'];
+  labels.forEach(function(el, i) { if (labelKeys[i]) el.textContent = window.t(labelKeys[i]); });
+
+  var fields = [
+    ['year',       'placeholderYear'],
+    ['month',      'placeholderMonth'],
+    ['day',        'placeholderDay'],
+    ['hour',       'placeholderHour'],
+    ['minute',     'placeholderMinute'],
+    ['city-input', 'placeholderCity']
+  ];
+  fields.forEach(function(pair) {
+    var el = document.getElementById(pair[0]);
+    if (el) el.placeholder = window.t(pair[1]);
+  });
+
+  var gender = document.getElementById('gender');
+  if (gender) {
+    gender.options[0].text = window.t('optionMale');
+    gender.options[1].text = window.t('optionFemale');
+  }
+
+  var backBtn = document.getElementById('back-btn');
+  if (backBtn) backBtn.textContent = window.t('btnBack');
 };
 
 // Earthly Branch English display map
