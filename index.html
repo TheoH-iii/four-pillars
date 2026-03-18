@@ -83,6 +83,8 @@
       document.querySelectorAll('.lang-btn').forEach(function(b) {
         b.classList.toggle('active', b.dataset.lang === 'zh');
       });
+      window.currentLanguage = 'zh';
+      applyFormTranslations();
     }
   })();
 </script>
