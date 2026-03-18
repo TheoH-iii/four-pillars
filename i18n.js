@@ -80,6 +80,10 @@ window.i18n = {
     qualityAdaptable: "Adaptable, resourceful",
     starsNone: "None detected",
     starsPresent: "Present",
+    starNoble: "Noble Star",
+    starRomance: "Romance Star",
+    starTraveling: "Traveling Star",
+    starAcademic: "Academic Star",
     cycleUnavailable: "Unavailable",
     cycleFrom: "from"
   },
@@ -163,6 +167,10 @@ window.i18n = {
     qualityAdaptable: "靈活、善於應變",
     starsNone: "未發現神煞",
     starsPresent: "存在",
+    starNoble: "天乙貴人",
+    starRomance: "桃花",
+    starTraveling: "驛馬",
+    starAcademic: "文昌",
     cycleUnavailable: "無法取得",
     cycleFrom: "起於"
   }

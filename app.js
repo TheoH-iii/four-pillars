@@ -500,12 +500,18 @@ function buildCardLuckCycles(yun) {
 
 // 7. Special Stars
 function buildCardSpecialStars(analysis) {
+  const STAR_KEY = {
+    'Noble Star': 'starNoble',
+    'Romance Star': 'starRomance',
+    'Traveling Star': 'starTraveling',
+    'Academic Star': 'starAcademic'
+  };
   const stars = analysis.stars;
   return {
     title: t('cardSpecialStars'),
     body: dataRows(
       stars.length > 0
-        ? stars.map(s => [s, t('starsPresent')])
+        ? stars.map(s => [t(STAR_KEY[s] || s), t('starsPresent')])
         : [[t('labelStars'), t('starsNone')]]
     )
   };
