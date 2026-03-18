@@ -1,1 +1,211 @@
 // EN / zh-TW translations
+window.i18n = {
+  en: {
+    pageTitle: "Four Pillars of Destiny",
+    h1: "Written in the Moment of Your Birth",
+    labelBirthDate: "Birth Date",
+    labelBirthTime: "Birth Time",
+    labelBirthCity: "Birth City",
+    labelGender: "Gender",
+    placeholderYear: "Year",
+    placeholderMonth: "Month",
+    placeholderDay: "Day",
+    placeholderHour: "Hour",
+    placeholderMinute: "Minute",
+    placeholderCity: "Type city name...",
+    optionMale: "Male",
+    optionFemale: "Female",
+    btnCalculate: "Calculate Chart",
+    btnCalculating: "Calculating...",
+    btnBack: "← New Chart",
+    btnReveal: "Reveal Reading",
+    btnRetry: "Retry",
+    errorCityNotFound: "Could not resolve city. Please try a different city name.",
+    errorGeneric: "An error occurred. Please try again.",
+    errorReadingUnavailable: "Reading unavailable. Please try again.",
+    validYear: "Year must be between 1900 and 2100",
+    validMonth: "Month must be between 1 and 12",
+    validDay: "Day must be between 1 and 31",
+    validHour: "Hour must be between 0 and 23",
+    validMinute: "Minute must be between 0 and 59",
+    validCity: "Please enter a birth city",
+    cardOverview: "Chart Overview",
+    cardDayMaster: "Day Master",
+    cardFiveElements: "Five Elements Balance",
+    cardLuckyElements: "Lucky Elements",
+    cardTenDeities: "Ten Deity Breakdown",
+    cardLuckCycles: "Luck Cycles",
+    cardSpecialStars: "Special Stars",
+    cardLifeGuidance: "Life Guidance",
+    cardPartnerTraits: "Ideal Partner Traits",
+    cardAISummary: "AI Summary",
+    labelPillars: "Pillars",
+    labelPattern: "Pattern",
+    labelCity: "City",
+    labelTrueSolarTime: "True Solar Time",
+    labelStem: "Stem",
+    labelElement: "Element",
+    labelPolarity: "Polarity",
+    labelStrength: "Strength",
+    labelDistribution: "Distribution",
+    labelAlso: "Also",
+    labelStrongest: "Strongest",
+    labelWeakest: "Weakest",
+    labelFavorable: "Favorable",
+    labelUnfavorable: "Unfavorable",
+    labelBasis: "Basis",
+    labelDayMaster: "Day Master",
+    labelDominant: "Dominant",
+    labelSecondary: "Secondary",
+    labelThird: "Third",
+    labelCyclesBeginAge: "Cycles begin age",
+    labelStars: "Stars",
+    labelStatus: "Status",
+    labelChartType: "Chart Type",
+    labelEnhanceWith: "Enhance with",
+    labelPartnerElement: "Partner element",
+    labelCompatibility: "Compatibility",
+    labelKeyQuality: "Key quality",
+    strengthStrong: "Strong (身强)",
+    strengthWeak: "Weak (身弱)",
+    strengthStrongDesc: "Strong — assertive, self-reliant",
+    strengthWeakDesc: "Weak — collaborative, adaptive",
+    strengthStrongBasis: "Strong chart — needs control",
+    strengthWeakBasis: "Weak chart — needs support",
+    polarityYang: "Yang",
+    polarityYin: "Yin",
+    compatGrounding: "Grounding, steady",
+    compatSupportive: "Supportive, nurturing",
+    qualityDisciplined: "Disciplined, structured",
+    qualityAdaptable: "Adaptable, resourceful",
+    starsNone: "None detected",
+    starsPresent: "Present",
+    cycleUnavailable: "Unavailable",
+    cycleFrom: "from"
+  },
+  zh: {
+    pageTitle: "四柱命理",
+    h1: "探尋屬於你的天命藍圖",
+    labelBirthDate: "出生日期",
+    labelBirthTime: "出生時間",
+    labelBirthCity: "出生城市",
+    labelGender: "性別",
+    placeholderYear: "年",
+    placeholderMonth: "月",
+    placeholderDay: "日",
+    placeholderHour: "時",
+    placeholderMinute: "分",
+    placeholderCity: "輸入城市名稱...",
+    optionMale: "男",
+    optionFemale: "女",
+    btnCalculate: "排盤",
+    btnCalculating: "計算中...",
+    btnBack: "← 重新排盤",
+    btnReveal: "展開解讀",
+    btnRetry: "重試",
+    errorCityNotFound: "無法解析城市，請嘗試其他城市名稱。",
+    errorGeneric: "發生錯誤，請重試。",
+    errorReadingUnavailable: "解讀暫時無法使用，請重試。",
+    validYear: "年份須介於 1900 至 2100 之間",
+    validMonth: "月份須介於 1 至 12 之間",
+    validDay: "日期須介於 1 至 31 之間",
+    validHour: "時間須介於 0 至 23 之間",
+    validMinute: "分鐘須介於 0 至 59 之間",
+    validCity: "請輸入出生城市",
+    cardOverview: "命盤總覽",
+    cardDayMaster: "日主",
+    cardFiveElements: "五行分佈",
+    cardLuckyElements: "喜用神",
+    cardTenDeities: "十神分析",
+    cardLuckCycles: "大運",
+    cardSpecialStars: "特殊神煞",
+    cardLifeGuidance: "人生指引",
+    cardPartnerTraits: "理想伴侶特質",
+    cardAISummary: "AI 總結",
+    labelPillars: "四柱",
+    labelPattern: "格局",
+    labelCity: "城市",
+    labelTrueSolarTime: "真太陽時",
+    labelStem: "天干",
+    labelElement: "五行",
+    labelPolarity: "陰陽",
+    labelStrength: "身強弱",
+    labelDistribution: "分佈",
+    labelAlso: "其他",
+    labelStrongest: "最強",
+    labelWeakest: "最弱",
+    labelFavorable: "喜用",
+    labelUnfavorable: "忌神",
+    labelBasis: "依據",
+    labelDayMaster: "日主",
+    labelDominant: "主要",
+    labelSecondary: "次要",
+    labelThird: "第三",
+    labelCyclesBeginAge: "起運年齡",
+    labelStars: "神煞",
+    labelStatus: "狀態",
+    labelChartType: "命格類型",
+    labelEnhanceWith: "增強方向",
+    labelPartnerElement: "伴侶五行",
+    labelCompatibility: "相配特質",
+    labelKeyQuality: "關鍵特質",
+    strengthStrong: "身強 (Strong)",
+    strengthWeak: "身弱 (Weak)",
+    strengthStrongDesc: "身強 — 主動、自立",
+    strengthWeakDesc: "身弱 — 合作、適應",
+    strengthStrongBasis: "身強命格 — 需要制化",
+    strengthWeakBasis: "身弱命格 — 需要扶助",
+    polarityYang: "陽",
+    polarityYin: "陰",
+    compatGrounding: "穩重踏實",
+    compatSupportive: "支持包容",
+    qualityDisciplined: "有紀律、有條理",
+    qualityAdaptable: "靈活、善於應變",
+    starsNone: "未發現神煞",
+    starsPresent: "存在",
+    cycleUnavailable: "無法取得",
+    cycleFrom: "起於"
+  }
+};
+
+window.currentLanguage = localStorage.getItem('lang') || 'en';
+
+window.t = function(key) {
+  return (window.i18n[window.currentLanguage] || window.i18n.en)[key] || key;
+};
+
+window.setLanguage = function(lang) {
+  window.currentLanguage = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+  document.body.classList.toggle('lang-zh', lang === 'zh');
+  // Update toggle button active states
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  // Update page title
+  document.title = window.t('pageTitle');
+  // Re-render cards if chart is visible
+  if (window.currentChart && !document.getElementById('chart-screen').hidden) {
+    renderCards(window.currentChart);
+  }
+};
+
+// Heavenly Stem English display map
+window.STEM_EN = {
+  '甲': 'Yang Wood', '乙': 'Yin Wood',
+  '丙': 'Yang Fire', '丁': 'Yin Fire',
+  '戊': 'Yang Earth', '己': 'Yin Earth',
+  '庚': 'Yang Metal', '辛': 'Yin Metal',
+  '壬': 'Yang Water', '癸': 'Yin Water'
+};
+
+// Earthly Branch English display map
+window.BRANCH_EN = {
+  '子': 'Rat Water',    '丑': 'Ox Earth',
+  '寅': 'Tiger Wood',   '卯': 'Rabbit Wood',
+  '辰': 'Dragon Earth', '巳': 'Snake Fire',
+  '午': 'Horse Fire',   '未': 'Goat Earth',
+  '申': 'Monkey Metal', '酉': 'Rooster Metal',
+  '戌': 'Dog Earth',    '亥': 'Pig Water'
+};
