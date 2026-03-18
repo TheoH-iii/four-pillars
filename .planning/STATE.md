@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Not started
-status: planning
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-18T03:18:10.640Z"
+current_plan: "04-02"
+status: in_progress
+stopped_at: "Completed 04-01-PLAN.md"
+last_updated: "2026-03-18T03:31:00Z"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
-  percent: 35
+  total_plans: 9
+  completed_plans: 9
+  percent: 50
 ---
 
 # Project State: Four Pillars of Destiny (Bazi) Web App
@@ -22,28 +22,28 @@ progress:
 
 **Core Value:** Accurate, aesthetically pleasing Bazi charts with personalized AI readings must work for every user, regardless of language.
 
-**Current Focus:** Phase 2 - Chart Input & Bazi Calculation
+**Current Focus:** Phase 4 - Bilingual UI & Production Verification
 
 ---
 
 ## Current Position
 
-**Phase:** 3 - AI Integration
-**Current Plan:** Not started
-**Status:** Ready to plan
+**Phase:** 4 - Bilingual UI & Production Verification
+**Current Plan:** 04-02
+**Status:** In progress
 
 ```
-Progress: [#######---] 35%
-Phase 1 [x] Phase 2 [x] Phase 3 [~] Phase 4 [ ]
+Progress: [##########] 50%
+Phase 1 [x] Phase 2 [x] Phase 3 [x] Phase 4 [~]
 ```
 
 ---
 
 ## Performance Metrics
 
-- Phases complete: 2/4
-- Plans complete: 8 total (2 Phase 1 + 4 Phase 2 + 2 Phase 3)
-- Requirements satisfied: 16/17 (DEPLOY-01, DEPLOY-02, DEPLOY-03, CHART-01, CHART-02, CHART-03, CHART-04, CHART-05, CHART-06, AI-01, AI-02, AI-03, AI-04, AI-05)
+- Phases complete: 3/4
+- Plans complete: 9 total (2 Phase 1 + 4 Phase 2 + 2 Phase 3 + 1 Phase 4)
+- Requirements satisfied: 16/17 + UI-01, UI-02, UI-03
 
 | Phase | Plan | Duration | Tasks | Files |
 |-------|------|----------|-------|-------|
@@ -53,6 +53,7 @@ Phase 1 [x] Phase 2 [x] Phase 3 [~] Phase 4 [ ]
 | 02    | 04   | 5min     | 1     | 1     |
 | 03    | 01   | 3min     | 2     | 2     |
 | 03    | 02   | 4min     | 2     | 2     |
+| 04    | 01   | 2min     | 2     | 2     |
 
 ---
 
@@ -82,6 +83,9 @@ Phase 1 [x] Phase 2 [x] Phase 3 [~] Phase 4 [ ]
 - SSE line buffer across stream chunks prevents partial JSON parse errors at chunk boundaries
 - Pure JS markdown renderer (bold, paragraphs, bullets) — no external library, consistent with no-framework rule
 - Cache guard via data-readingLoaded attribute prevents duplicate fetches on re-click
+- 81 keys per language in i18n.js — all form, validation, card, and label strings covered
+- STEM_EN and BRANCH_EN added to i18n.js as companion globals for app.js display
+- Inline init script placed after app.js to restore persisted language on load
 
 ### Active Todos
 - None
@@ -93,9 +97,9 @@ Phase 1 [x] Phase 2 [x] Phase 3 [~] Phase 4 [ ]
 
 ## Session Continuity
 
-**Last session:** 2026-03-18T03:18:10.612Z
-**Stopped at:** Phase 4 context gathered
-**Next action:** Execute 03-03 (if exists) or phase complete
+**Last session:** 2026-03-18T03:31:00Z
+**Stopped at:** Completed 04-01-PLAN.md
+**Next action:** Execute 04-02
 
 ---
 
