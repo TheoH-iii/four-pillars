@@ -400,7 +400,7 @@ function buildCardChartOverview(eightChar, analysis, input, city, tst) {
 function buildCardDayMaster(eightChar, analysis) {
   const dayStem = eightChar.getDayGan();
   const el = STEM_ELEMENT[dayStem];
-  const elName = ELEMENT_NAMES[el] || el;
+  const elName = elLabel(el);
   const polarity = dayStem ? (['甲','丙','戊','庚','壬'].includes(dayStem) ? t('polarityYang') : t('polarityYin')) : '';
   const stemDisplay = window.currentLanguage === 'zh'
     ? dayStem
@@ -520,7 +520,7 @@ function buildCardLifeGuidance(analysis) {
     body: dataRows([
       [t('labelChartType'), isStrong ? t('strengthStrongDesc') : t('strengthWeakDesc')],
       [t('labelEnhanceWith'), favorable.join(', ') || '—'],
-      [t('labelPattern'), analysis.pattern.en]
+      [t('labelPattern'), window.currentLanguage === 'zh' ? analysis.pattern.name : analysis.pattern.en]
     ])
   };
 }
