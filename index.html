@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Four Pillars of Destiny</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div id="lang-toggle" style="position:fixed;top:16px;right:20px;z-index:1000;display:flex;align-items:center;gap:2px;background:#fff;border:1px solid rgba(201,151,74,0.2);border-radius:20px;padding:3px 4px;">
+  <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')" style="border:none;background:transparent;color:#A89880;font-size:12px;font-weight:500;padding:4px 10px;border-radius:16px;cursor:pointer;">EN</button>
+  <button class="lang-btn" data-lang="zh" onclick="setLanguage('zh')" style="border:none;background:transparent;color:#A89880;font-size:12px;font-weight:500;padding:4px 10px;border-radius:16px;cursor:pointer;">中文</button>
+</div>
 
 <!-- Form Screen -->
 <div id="form-screen">
@@ -65,5 +73,18 @@
 <script src="cities.js"></script>
 <script src="i18n.js"></script>
 <script src="app.js"></script>
+<script>
+  // Apply persisted language on load
+  (function() {
+    var lang = localStorage.getItem('lang') || 'en';
+    if (lang === 'zh') {
+      document.body.classList.add('lang-zh');
+      document.documentElement.lang = 'zh-TW';
+      document.querySelectorAll('.lang-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.lang === 'zh');
+      });
+    }
+  })();
+</script>
 </body>
 </html>
