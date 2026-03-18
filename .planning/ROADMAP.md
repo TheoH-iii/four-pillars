@@ -10,7 +10,7 @@
 
 - [x] **Phase 1: Project Scaffold & Deployment Pipeline** - Vercel project wired up, serverless function reachable, CI/CD ready
 - [x] **Phase 2: Chart Input & Bazi Calculation** - User can enter birth data, resolve city, and see a rendered 10-card chart (completed 2026-03-17)
-- [ ] **Phase 3: AI Integration** - All 10 cards expand with Claude-powered deep readings in real time
+- [x] **Phase 3: AI Integration** - All 10 cards expand with Claude-powered deep readings in real time
 - [ ] **Phase 4: Bilingual UI & Production Verification** - Language toggle works end-to-end, app verified fully functional in production
 
 ---
@@ -80,7 +80,13 @@ Plans:
   3. AI readings are generated and returned in whichever language is currently selected
   4. The chart layout is visually polished and responsive across common screen sizes
   5. All 17 v1 requirements are verified working in the live Vercel production URL
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Fill i18n.js with full EN/zh-TW translations, add language toggle and Google Fonts to index.html
+- [ ] 04-02-PLAN.md — Replace style.css with warm cream theme ported from v1-backup
+- [ ] 04-03-PLAN.md — Wire t() calls throughout app.js, replace all hardcoded UI strings
+- [ ] 04-04-PLAN.md — Commit, deploy to Vercel, and verify all 17 requirements on production URL
 
 ---
 
@@ -91,7 +97,7 @@ Plans:
 | 1. Project Scaffold & Deployment Pipeline | 2/2 | Complete | 2026-03-17 |
 | 2. Chart Input & Bazi Calculation | 4/4 | Complete   | 2026-03-17 |
 | 3. AI Integration | 2/2 | Complete | 2026-03-17 |
-| 4. Bilingual UI & Production Verification | 0/? | Not started | - |
+| 4. Bilingual UI & Production Verification | 0/4 | Not started | - |
 
 ---
 
